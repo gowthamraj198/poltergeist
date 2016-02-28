@@ -22,7 +22,6 @@ addons:
 
 matrix:
   include:
-<<<<<<< HEAD
     - rvm: 2.5.1
       gemfile: gemfiles/Gemfile.capy2
     - rvm: 2.5.1
