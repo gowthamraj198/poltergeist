@@ -146,8 +146,7 @@ class Poltergeist.WebPage
   injectAgent: ->
     if @native().evaluate(-> typeof __poltergeist) == "undefined"
       @native().injectJs "#{phantom.libraryPath}/agent.js"
-      for extension in WebPage.EXTENSIONS
-        @native().injectJs extension
+      @native().injectJs extension for extension in WebPage.EXTENSIONS
       return true
     return false
 
@@ -174,8 +173,7 @@ class Poltergeist.WebPage
 
   keyModifierKeys: (names) ->
     for name in names.split(',') when name isnt 'keypad'
-      name = name.charAt(0).toUpperCase() + name.substring(1)
-      @keyCode(name)
+      @keyCode(name.charAt(0).toUpperCase() + name.substring(1))
 
   _waitState_until: (states, callback, timeout, timeout_callback) ->
     if (@state in states)
@@ -319,8 +317,7 @@ class Poltergeist.WebPage
     @native().customHeaders = headers
 
   addTempHeader: (header) ->
-    for name, value of header
-      @_tempHeaders[name] = value
+    @_tempHeaders[name] = value for name, value of header
     @_tempHeaders
 
   addTempHeaderToRemoveOnRedirect: (header) ->
@@ -336,8 +333,7 @@ class Poltergeist.WebPage
 
   removeTempHeaders: ->
     allHeaders = @getCustomHeaders()
-    for name, value of @_tempHeaders
-      delete allHeaders[name]
+    delete allHeaders[name] for namve, value of @_temptHeaders
     @setCustomHeaders(allHeaders)
 
   pushFrame: (name) ->
@@ -394,7 +390,7 @@ class Poltergeist.WebPage
 
   evaluate: (fn, args...) ->
     @injectAgent()
-    result = @native().evaluate("function() {
+    @native().evaluate("function() {
       var page_id = arguments[0];
       var args = [];
 
@@ -407,7 +403,6 @@ class Poltergeist.WebPage
       }
       var _result = #{@stringifyCall(fn, "args")};
       return window.__poltergeist.wrapResults(_result, page_id); }", @id, args...)
-    result
 
   evaluate_async: (fn, callback, args...) ->
     command_id = ++@_asyncEvaluationId
@@ -436,6 +431,7 @@ class Poltergeist.WebPage
     return
 
   execute: (fn, args...) ->
+    @injectAgent()
     @native().evaluate("function() {
       for(var i=0; i < arguments.length; i++){
         if ((typeof(arguments[i]) == 'object') && (typeof(arguments[i]['ELEMENT']) == 'object')){
