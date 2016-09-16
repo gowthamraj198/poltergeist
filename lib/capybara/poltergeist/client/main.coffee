@@ -16,7 +16,7 @@ class Poltergeist
       command_id: command_id,
       error:
         name: error.name || 'Generic',
-        args: error.args && error.args() || [error.toString()]
+        args: error.args?() || [error.toString()]
     )
 
   send: (data) ->

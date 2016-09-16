@@ -274,7 +274,7 @@ class Poltergeist.Browser
   window_handle: (name = null) ->
     handle = if name
       page = @pages.filter((p) -> !p.closed && p.windowName() == name)[0]
-      if page then page.handle else null
+      page?.handle
     else
       @currentPage.handle
 
