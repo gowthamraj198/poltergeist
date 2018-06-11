@@ -324,13 +324,12 @@ class Poltergeist.WebPage
 
   removeTempHeadersForRedirect: ->
     allHeaders = @getCustomHeaders()
-    for name, value of @_tempHeadersToRemoveOnRedirect
-      delete allHeaders[name]
+    delete allHeaders[name] for name of @_tempHeadersToRemoveOnRedirect
     @setCustomHeaders(allHeaders)
 
   removeTempHeaders: ->
     allHeaders = @getCustomHeaders()
-    delete allHeaders[name] for namve, value of @_temptHeaders
+    delete allHeaders[name] for name of @_tempHeaders
     @setCustomHeaders(allHeaders)
 
   pushFrame: (name) ->

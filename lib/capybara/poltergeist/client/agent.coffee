@@ -390,8 +390,7 @@ class PoltergeistAgent.Node
     selector += el.tagName.toLowerCase()
     selector += "##{el.id}" if el.id
 
-    for className in el.classList when className != ''
-      selector += ".#{className}"
+    selector += ".#{className}" for className in el.classList when className != ''
     selector
 
   characterToKeyCode: (character) ->

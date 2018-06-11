@@ -26,7 +26,7 @@ module Capybara::Poltergeist
       it 'shows the detected version in the version error message' do
         stub_version('2.0.1')
         expect { subject }.to raise_error(Cliver::Dependency::VersionMismatch) do |e|
-          expect(e.message).to include('2.1.1')
+          expect(e.message).to include('2.0.1')
         end
       end
 
